@@ -13,9 +13,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RadioButtonsGroup from './RadioButtonsGroup';
 import {Link} from 'react-router-dom'
-// import { signUp } from '../firebase/signup';
+import { signUp } from '../firebase/signup';
 import { useState } from 'react';
-import {signUp} from "../redux/reducer/index";
+import { registerInitiate,clearError } from "../redux/action";
+
+// import {signUp} from "../redux/reducer/index";
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -44,12 +46,13 @@ export default function SignUp() {
   console.log(state)
 
   const dispatch = useDispatch();
+  const { currentUser,error } = useSelector((state) => state.user);
   const [roll , setRoll]=useState('');
   const pull_data = (roll) => {
     setRoll(roll);
   }
   
-  const handleSubmit = async (event) => {
+  const handleSubmit =  (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data.get)
@@ -60,13 +63,18 @@ export default function SignUp() {
       roll: roll
     });
     try{
-      await dispatch( signUp({
-      fullname: data.get('fullname'),
-      email: data.get('email'),
-      password: data.get('password'),
-      roll: roll}))
-      alert('SignUp Successfully')
-      }
+      dispatch(registerInitiate({
+        fullname: data.get('fullname'),
+        email: data.get('email'),
+        password: data.get('password'),
+        roll: roll}))}
+      // await  signUp({
+      // fullname: data.get('fullname'),
+      // email: data.get('email'),
+      // password: data.get('password'),
+      // roll: roll})
+      // alert('SignUp Successfully')
+      // }
       catch (e) {
       alert(e.message)
         }

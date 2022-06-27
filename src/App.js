@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import AdminLoginPage from './pages/AdminLoginPage';
+import AdminPage from './pages/AdminPage';
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import {
@@ -13,7 +14,7 @@ function App() {
   return (
     <div className="App">
     <Routes>
-    <Route exact path="/" element={<AdminLoginPage/>} />
+    <Route exact path="/" element={<AdminPage/>} />
     </Routes>
       <Routes>
         <Route path='/signup' element={<SignUpPage/>}/>
