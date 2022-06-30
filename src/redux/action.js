@@ -1,6 +1,6 @@
 import * as type from "./actionType";
 import {auth} from "../firebase/firebaseConfig";
-import {createUserWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword} from "firebase/auth";
 
 const registerStart = () =>({
     type: type.REGISTER_START,
@@ -15,26 +15,25 @@ const registerFail = (error) =>({
 });
 
 
-const loginStart = () =>({
+export  const loginStart = () =>({
     type: type.LOGIN_START,
 });
-const loginSuccess = (user) =>({
+export const loginSuccess = (Data) =>({
     type: type.LOGIN_SUCCESS,
-    payload: user,
+    payload: Data.roll,
 });
-const loginFail = (error) =>({
-    type: type.LOGIN_FAIL,
-    payload: error,
+export const loginFail = () =>({
+    type: type.LOGIN_FAIL
 });
 
 
-const logoutStart = () =>({
+export const logoutStart = () =>({
     type: type.LOGOUT_START,
 });
-const logoutSuccess = () =>({
+export const logoutSuccess = () =>({
     type: type.LOGOUT_SUCCESS,
 });
-const logoutFail = (error) =>({
+export const logoutFail = (error) =>({
     type: type.LOGOUT_FAIL,
     payload: error,
 });
@@ -50,44 +49,43 @@ export const clearError = () =>({
 
 
 
-export const registerInitiate =  (authParams) => {
-    return function (dispatch){
-        dispatch(registerStart());
-        const { fullname, email, password,roll } = authParams
-        try{
-        createUserWithEmailAndPassword(auth,email,password)}
-        catch(error){
-            console.log(error)
-        }
-        // .then(({user})=> {
-        //     user.updateProfile({
-        //         displayName
-        //     })
-        //     dispatch(registerSuccess(user))
-        // })
-        // .catch((error) => dispatch(registerFail(error.message)))
-    };
-};
+// export const registerInitiate =  (authParams) => {
+//     return function (dispatch){
+//         dispatch(registerStart());
+//         const { fullname, email, password,roll } = authParams
+//         createUserWithEmailAndPassword(auth,email,password)
+//         //  dispatch(registerSuccess(user))}
+//         // catch(error){
+//         //     dispatch(registerFail(error))
+//         // }
+//         .then(({user})=> {
+//             // user.updateProfile({
+//             //     displayName
+//             // })
+//             dispatch(registerSuccess(user))
+//         })
+//         .catch((error) => dispatch(registerFail(error.message)))
+//     };
+// };
 
-export const loginInitiate = (email,password,) => {
-    return function (dispatch){
-        dispatch(loginStart());
-        auth
-        .signInWithEmailAndPassword(email,password)
-        .then(({user})=> {
-            
-            dispatch(loginSuccess(user))
-        })
-        .catch((error) => dispatch(loginFail(error.message)))
-    };
-};
+// export const loginInitiate = (authParams) => {
+//     return function (dispatch){
+//         const {email, roll, username } = authParams
+        
+//         .then((user)=> {
+//             console.log(user)
+//             dispatch(loginSuccess(user))
+//         })
+//         .catch((error) => dispatch(loginFail(error.message)))
+//     };
+// };
 
-export const logoutInitiate = () => {
-    return function (dispatch) {
-        dispatch(logoutStart() );
-        auth
-        .signOut()
-        .then((resp) =>   dispatch(logoutSuccess() ))
-        .catch((error) => dispatch(logoutFail(error.message)))
-    };
-};
+// export const logoutInitiate = () => {
+//     return function (dispatch) {
+//         dispatch(logoutStart() );
+//         auth
+//         .signOut()
+//         .then((resp) =>   dispatch(logoutSuccess() ))
+//         .catch((error) => dispatch(logoutFail(error.message)))
+//     };
+// };

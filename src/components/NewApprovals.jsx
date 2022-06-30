@@ -7,46 +7,20 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { Button } from '@mui/material';
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  // createData(
-  //   3,
-  //   '16 Mar, 2019',
-  //   'Michael Jackson',
-  //   'Gary, IN',
-  //   'AMEX ⠀•••• 2000',
-  //   654.39,
-  // ),
-  // createData(
-  //   4,
-  //   '15 Mar, 2019',
-  //   'Bruce Springsteen',
-  //   'Long Branch, NJ',
-  //   'VISA ⠀•••• 5919',
-  //   212.79,
-  // ),
+const Data = [
+  {
+    Name:"ABC",
+    Email:"ABC@gmail.com",
+    Category:"Fresher"
+  },
+ { Name:"ABC",
+    Email:"ABC@gmail.com",
+    Category:"Fresher"},
+    { Name:"ABC",
+    Email:"ABC@gmail.com",
+    Category:"Fresher"}
 ];
 
 function preventDefault(event) {
@@ -56,31 +30,30 @@ function preventDefault(event) {
 export default function NewApprovals() {
   return (
     <React.Fragment>
-      <Title>New Approvals</Title>
+      <Title>New Approval Request</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+
+            <TableCell>Full Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Category</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+          {Data.slice(0,2).map((Data) => (
+            <TableRow key={Data.id}>
+              <TableCell>{Data.Name}</TableCell>
+              <TableCell>{Data.Email}</TableCell>
+              <TableCell>{Data.Category}</TableCell>
+              <TableCell><Button variant="contained" disableElevation>Accept</Button></TableCell>
+              <TableCell><Button variant="contained" disableElevation>Cancel</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+        See more approval requests
       </Link>
     </React.Fragment>
   );

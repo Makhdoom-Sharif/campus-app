@@ -10,9 +10,12 @@ import Container from '@mui/material/Container';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fade from '@mui/material/Fade';
-import { Button } from '@mui/material';
+import { Avatar, Button } from '@mui/material';
 import './NavBar.css'
 import {Link} from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
+import { logoutInitiate } from "../redux/action";
+import { LogOut } from './LogOut';
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -60,27 +63,35 @@ ScrollTop.propTypes = {
 };
 
 export default function BackToTop(props) {
+  const { currentUser,loading,roll } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar>
         <Toolbar style={{justifyContent: "space-between"}}>
           <Typography variant="h6" component="div">
-            <Link to={'/'} style={{color:"inherit" , textDecoration: "none"}}>
+            <Link to={currentUser? roll==="student"? '/homepage': "/company" : '/'} style={{color:"inherit" , textDecoration: "none"}}>
             The Campus Recruitment App
             </Link>
           </Typography>
           <div className='buttons'>
-          <div >
-          <Link to={'/signup'} style={{ textDecoration: "none"}} >
+          {currentUser?<>
+          <div style={{marginRight:"15px"}} ><Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" /></div>
+            <div><Link  to={roll==="student" ? '/studentprofile' : '/companyprofile'}  style={{ textDecoration: "none"}} >
+          <Button variant="contained"  disableElevation style={{marginRight: "10px"}}>Profile</Button>
+          </Link></div>
+          <LogOut/></>:
+          <><div >
+          <Link  to={loading ? '#' : '/signup'}  style={{ textDecoration: "none"}} >
           <Button variant="contained"  disableElevation style={{marginRight: "10px"}}>Sign Up</Button>
           </Link>
           </div>
           <div>
-            <Link to={'/login'} style={{ textDecoration: "none"}}>
+            <Link to={loading ? '#' : '/login'} style={{ textDecoration: "none"}}>
           <Button variant="contained" disableElevation>Log In</Button>
           </Link>
-          </div>
+          </div></>}
           </div>
         </Toolbar>
         

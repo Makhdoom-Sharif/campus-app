@@ -12,13 +12,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RadioButtonsGroup from './RadioButtonsGroup';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { signUp } from '../firebase/signup';
 import { useState } from 'react';
 import { registerInitiate,clearError } from "../redux/action";
 
 // import {signUp} from "../redux/reducer/index";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from 'react';
 
 
 function Copyright(props) {
@@ -42,17 +43,27 @@ const theme = createTheme();
 
 
 export default function SignUp() {
-  const state = useSelector(state => state);
-  console.log(state)
-
+  // const state = useSelector(state => state);
+  // console.log(state)
+  const navigate = useNavigate();
+  // useEffect(()=>{
+  //   if(currentUser){
+  //     navigate.push("/homepage")
+  //   }
+  // },[currentUser,navigate])
   const dispatch = useDispatch();
   const { currentUser,error } = useSelector((state) => state.user);
+  useEffect(()=>{
+    if(currentUser){
+      navigate('/homepage')
+    }
+  },[currentUser,navigate])
   const [roll , setRoll]=useState('');
   const pull_data = (roll) => {
     setRoll(roll);
   }
   
-  const handleSubmit =  (event) => {
+  const handleSubmit = async  (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log(data.get)
@@ -63,18 +74,18 @@ export default function SignUp() {
       roll: roll
     });
     try{
-      dispatch(registerInitiate({
-        fullname: data.get('fullname'),
-        email: data.get('email'),
-        password: data.get('password'),
-        roll: roll}))}
-      // await  signUp({
-      // fullname: data.get('fullname'),
-      // email: data.get('email'),
-      // password: data.get('password'),
-      // roll: roll})
-      // alert('SignUp Successfully')
-      // }
+      // dispatch(registerInitiate({
+      //   fullname: data.get('fullname'),
+      //   email: data.get('email'),
+      //   password: data.get('password'),
+      //   roll: roll}))}
+      await  signUp({
+      fullname: data.get('fullname'),
+      email: data.get('email'),
+      password: data.get('password'),
+      roll: roll})
+      alert('SignUp Successfully')
+      }
       catch (e) {
       alert(e.message)
         }
